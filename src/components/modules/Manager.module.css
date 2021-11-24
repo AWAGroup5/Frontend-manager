@@ -1,0 +1,73 @@
+.spacer {
+    margin-top: 120px;
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buttonfield {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.leftbuttonscontainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.leftbuttons {
+    width: 300px;
+    height: 150px;
+    margin: 20px;
+    border-radius: 10px;
+}
+
+.textnbuttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.textField {
+    background-color: white;
+    height: 500px;
+    margin: 20px;
+    width: 500px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.listHeader {
+    width: 107px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: large;
+}
+
+.content {
+    margin: 20px;
+}
+
+.orderbuttons {
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: space-between;
+}
+
+.btns {
+    width: 220px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+.radio {
+    height: 30px;
+    width: 30px;
+    margin: 10px;
+}

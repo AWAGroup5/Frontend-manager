@@ -1,0 +1,34 @@
+{
+    "data": [
+    {
+        "id": 1,
+        "name": "Hesburger",
+        "description": "Good stuff",
+        "price": 2
+    },
+    {
+        "id": 2,
+        "name": "Burger King",
+        "description": "Good stuff",
+        "price": 2
+    },
+    {
+        "id": 3,
+        "name": "Taco Bell",
+        "description": "Filler",
+        "price": 1
+    },
+    {
+        "id": 4,
+        "name": "Harald",
+        "description": "Best stuff man has ever tasted",
+        "price": 4
+    },
+    {
+        "id": 5,
+        "name": "Friends&Brgrs",
+        "description": "Foodgasm",
+        "price": 3
+    }
+]
+}

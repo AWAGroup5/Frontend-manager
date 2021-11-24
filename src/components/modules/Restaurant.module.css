@@ -1,0 +1,40 @@
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 200px;
+    width: 350px;
+    overflow: hidden;
+}
+
+.image {
+    transition: transform .2s; /* Animation */
+    width: 101%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.image:hover {
+    transform: scale(1.1);
+}
+
+.headercontainer {
+    position: absolute;
+    width: 100%;
+    height: 70px;
+    bottom: 0;
+    background: rgba(255, 255, 255);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.header {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.greytext {
+    margin-left: 10px;
+    color: rgb(85, 85, 85);
+}

@@ -1,0 +1,79 @@
+.page {
+    width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.flexbox {
+    font-weight: bold;
+    font-size: large;
+}
+
+.container {
+    width: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 30px 0 20px;
+}
+
+.buttoncontainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    width: 200px;
+    height: 100px;
+    margin-left: 80px;
+    border-radius: 10px;
+}
+
+.error {
+    padding-left: 160px;
+    color: red;
+    font-weight: 500;
+    font-size: small;
+    margin-bottom: -17px;
+}
+
+.inputField {
+    margin-right: 100px;
+    height: 30px;
+    width: 250px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.selectField {
+    margin-left: 16px;
+    height: 36px;
+    width: 258px;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.fileUpload {
+    margin-right: 100px;
+    width: 257px
+}
+
+.spacer {
+    margin-top: 400px;
+}
+
+.addnewBtn {
+    height: 36px;
+    border-radius: 10px;
+}
+
+.addPopup {
+    position: relative;
+    width: 500px;
+    bottom: 30px;
+    left: 1000px;
+    margin-bottom: -23px;
+}
