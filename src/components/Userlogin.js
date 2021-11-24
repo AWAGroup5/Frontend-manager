@@ -13,7 +13,6 @@ export default class Userlogin extends Component {
         this.state = {
             username: '',
             password: '',
-            choice: '',
             userE: false,
             passE: false
         };
@@ -45,11 +44,11 @@ export default class Userlogin extends Component {
             this.setState({ passE: true })
         } else this.setState({ passE: false })
 
-        if (this.state.choice !== '' && this.state.username !== '' && this.state.password !== '') {
+        if (this.state.username !== '' && this.state.password !== '') {
             const userObject = {
                 username: this.state.username,
                 password: this.state.password,
-                choice: this.state.choice
+               
             };
             console.log(userObject);
 

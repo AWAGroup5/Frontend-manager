@@ -41,6 +41,8 @@ export default class Manager extends Component {
                         <Link to="newproduct">
                             <button className={ styles.leftbuttons }>New product</button>
                         </Link>
+                       
+
                     </div>
                     <div className={ styles.textnbuttons }>
                         <div className={ styles.textField }>

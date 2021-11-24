@@ -101,13 +101,12 @@ export default class RegisterRestaurant extends Component {
                     <div className={ styles.container }>
                         <img src="BigFood.png" alt="Food" className={ styles.imageUser }/>
                             <div className={ styles.registerContainer }>
-
                                 <div className={styles.row}>
-                                      <div className={ styles.cell }>
-                                            Username:
-                                      </div>
-                                      <div className={ styles.cell }>
-                                                <input 
+                                    <div className={ styles.cell }>
+                                        Username:
+                                    </div>
+                                    <div className={ styles.cell }>
+                                            <input 
                                                 className={ styles.inputStyle} 
                                                 type="text" 
                                                 id="username"

@@ -112,6 +112,10 @@ onSubmit = (event) => {
             this.setState({ addressE: true })
         } else this.setState({ addressE: false })
 
+        if (this.state.phone === ''){
+            this.setState({ phoneE: true })
+        } else this.setState({ phoneE: false })
+
         if (this.state.operatingHours === ''){
             this.setState({ operatingHoursE: true })
         } else this.setState({ operatingHoursE: false })
@@ -213,7 +217,9 @@ resetValues() {
                                     </input>
                                 </div>
                             </div>
-
+                            {
+                                this.state.nameE ? <div className={ styles.error }>Insert name</div>: null
+                            }
                             <div className={ styles.row }>
                                 <div className={ styles.cell }>
                                     Address:
@@ -228,7 +234,9 @@ resetValues() {
                                     </input>
                                 </div>
                             </div>
-
+                            {
+                                this.state.addressE ? <div className={ styles.error }>Insert address</div>: null
+                            }    
                             <div className={ styles.row }>
                                 <div className={ styles.cell }>
                                     Phone:
@@ -243,7 +251,9 @@ resetValues() {
                                     </input>
                                 </div>
                             </div>
-
+                            {
+                                this.state.phoneE ? <div className={ styles.error }>Insert phone</div>: null
+                            }
                             <div className= { styles.row }>
                                 <div className={ styles.cell }>
                                     Type:
@@ -258,34 +268,36 @@ resetValues() {
                                     </input>
                                 </div>
                             </div>    
-
+                            {
+                                this.state.typeE ? <div className={ styles.error }>Insert type</div>: null
+                            }
                             <div className={ styles.row }>
                                   <div className={ styles.cell }>
-                                        Price:
+                                        Price level:
                                   </div>
                                   <div className={ styles.cell }>
-                                      <input 
-                                            type="radio" 
-                                            id="price1" 
-                                            value="1" 
-                                            onChange={ this.handleChange }>
-                                      </input>
+                                        <input 
+                                        type="radio" 
+                                        id="price1" 
+                                        value="€" 
+                                        onChange={ this.handleChange }>
+                                         </input>
                                             <label htmlFor="priceLevel">$</label>
-                                      <input 
-                                            type="radio" 
-                                            id="price2" 
-                                            value="2" 
-                                            onChange={ this.handleChange }>
-                                      </input>
+                                    <input 
+                                        type="radio" 
+                                        id="price2" 
+                                        value="€€" 
+                                        onChange={ this.handleChange }>
+                                    </input>
                                             <label htmlFor="priveLevel">$$</label>
-                                      <input 
-                                            type="radio" 
-                                            id="price3" 
-                                            value="3" 
-                                            onChange={ this.handleChange }>
+                                    <input 
+                                        type="radio" 
+                                        id="price3" 
+                                        value="€€€" 
+                                        onChange={ this.handleChange }>
                                     </input>
                                             <label htmlFor="priceLevel">$$$</label>
-                                  </div>
+                                </div>
                             </div>
 
                             <div className={ styles.row }>
@@ -305,11 +317,13 @@ resetValues() {
 
                                 </div>
                             </div>
-
+                            {
+                                this.state.operatingHoursE ? <div className={ styles.error }>Insert operating hours</div>: null
+                            }
                             <div className={ styles.row }>
-                                  <div className={ styles.cell }>
-                                        Image:
-                                  </div>
+                                <div className={ styles.cell }>
+                                    Image:
+                                </div>
                                 <div className={ styles.cell }>
                                     <input
                                         type="file"

@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from './modules/navBar.module.css'
-import Popup from './Popup'
 import Userlogin from './Userlogin';
 import { Link } from 'react-router-dom'
 
@@ -30,24 +29,31 @@ class NavBar extends React.Component {
                     FoodApp Manager Page
                 </Link>
                 <div className={ styles.buttons }>
-                    <Link to="/restaurant">
-                        TEST
+                    <Link to="/restaurant" className={ styles.leftbuttons}>
+                        Manager view
                     </Link>
-                    {
+                    <Link to="/manReg" className={ styles.leftbuttons }>
+                        Register
+                    </Link>
+                    <Link to="/restaurant/addrestaurant" className={ styles.leftbuttons}>
+                        Add restaurant
+                    </Link>
+
+                    {/* {
                         this.props.register ? 
                             <button className={ styles.leftbuttons } onClick={ this.togglePopup.bind(this) }>
                                 Register
                             </button>
                         : null
-                    }
+                    } */}
                     {
                         this.props.login ?
                             <button className={ styles.leftbuttons } onClick= { this.toggleLogin.bind(this)}>
-                                Manager Login
+                                Login
                             </button>
                         : null
                     }
-                    { this.state.showPopup ? <Popup text='Choose' closePopup={ this.togglePopup.bind(this) } /> : null }
+                   
                     { this.state.showLogin ? <Userlogin closePopup={ this.toggleLogin.bind(this) } /> : null }
                 </div>
             </div>
