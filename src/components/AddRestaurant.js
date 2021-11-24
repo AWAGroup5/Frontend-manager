@@ -18,14 +18,12 @@ export default class RegisterRestaurant extends Component {
     this.state = {
         name: '',
         address: '',
-        phone: '',
         operatingHours: '',
         type: '',
         price: '',
         image: null,
         nameE: false,
         addressE: false,
-        phoneE: false,
         operatingHoursE: false,
         typeE: false,
         priceE: false,
@@ -43,9 +41,6 @@ onChangeAddress = (e) => {
     this.setState({ address: e.target.value })
 }
 
-onChangePhone = (e) => {
-   this.setState({ phone: e.target.value })
-}
 
 onChangeOperetingHours = (e) => {
     this.setState({ operatingHours: e.target.value })
@@ -112,9 +107,6 @@ onSubmit = (event) => {
             this.setState({ addressE: true })
         } else this.setState({ addressE: false })
 
-        if (this.state.phone === ''){
-            this.setState({ phoneE: true })
-        } else this.setState({ phoneE: false })
 
         if (this.state.operatingHours === ''){
             this.setState({ operatingHoursE: true })
@@ -132,7 +124,6 @@ sendToAPI() {
         let restaurantObject = {
             name: this.state.name,
             description: this.state.address,
-            phone: this.state.phone,
             operatingHours: this.state.operatingHours,
             type:this.state.type,
             price: this.state.price  
@@ -168,24 +159,22 @@ sendToAPI() {
 resetValues() {
     var var1 = document.getElementById("name");
     var var2 = document.getElementById("address");
-    var var3 = document.getElementById("phone");
-    var var4 = document.getElementById("operatingHours");
-    var var5 = document.getElementById("type");
+    var var3 = document.getElementById("operatingHours");
+    var var4 = document.getElementById("type");
     document.getElementById("price1").checked = false;
     document.getElementById("price2").checked = false;
     document.getElementById("price3").checked = false;
-    var var6 = document.getElementById("image");
+    var var5 = document.getElementById("image");
 
     var1.value = '';
     var2.value = '';
     var3.value = '';
     var4.value = '';
-    var5.value = '';
-    var6.value = null;
+    var5.value = null;
+   
 
     this.setState({ name: '' });
     this.setState({ address: '' });
-    this.setState({ phone: '' });
     this.setState({ operatingHours: '' });
     this.setState({ type: '' });
     this.setState({ price: '' });
@@ -202,7 +191,6 @@ resetValues() {
                 <NavBar />
                     <div className={ styles.container }>
                         <div className={ styles.registerContainer }>
-
                             <div className={ styles.row }>
                                 <div className={ styles.cell }>
                                     Name:
@@ -237,23 +225,6 @@ resetValues() {
                             {
                                 this.state.addressE ? <div className={ styles.error }>Insert address</div>: null
                             }    
-                            <div className={ styles.row }>
-                                <div className={ styles.cell }>
-                                    Phone:
-                                </div>
-                                <div className={ styles.cell }>
-                                    <input 
-                                        className={ styles.inputStyle} 
-                                        type="text" 
-                                        id="phone" 
-                                        placeholder="Phone" 
-                                        onChange={ this.onChangePhone }>
-                                    </input>
-                                </div>
-                            </div>
-                            {
-                                this.state.phoneE ? <div className={ styles.error }>Insert phone</div>: null
-                            }
                             <div className= { styles.row }>
                                 <div className={ styles.cell }>
                                     Type:
@@ -279,38 +250,36 @@ resetValues() {
                                         <input 
                                         type="radio" 
                                         id="price1" 
-                                        value="€" 
+                                        value="1" 
                                         onChange={ this.handleChange }>
                                          </input>
-                                            <label htmlFor="priceLevel">$</label>
+                                            <label htmlFor="priceLevel">€</label>
                                     <input 
                                         type="radio" 
                                         id="price2" 
-                                        value="€€" 
+                                        value="2" 
                                         onChange={ this.handleChange }>
                                     </input>
-                                            <label htmlFor="priveLevel">$$</label>
+                                            <label htmlFor="priveLevel">€€</label>
                                     <input 
                                         type="radio" 
                                         id="price3" 
-                                        value="€€€" 
+                                        value="3" 
                                         onChange={ this.handleChange }>
                                     </input>
-                                            <label htmlFor="priceLevel">$$$</label>
+                                            <label htmlFor="priceLevel">€€€</label>
                                 </div>
                             </div>
-
                             <div className={ styles.row }>
                                 <div className={ styles.cell }>
                                     Operating hours:
                                 </div>
-                                <div className={ styles.cell }>
-                                  
+                                <div className={ styles.cell }>   
                                     <input 
                                         className={ styles.inputTimeStyle}  
                                         type="text" 
                                         id="operatingHours" 
-                                        placeholder="O-C" 
+                                        placeholder="Open-C" 
                                         onChange={ this.onChangeOperetingHours }>
                                     </input> 
                                     {/* Close<input className={ styles.inputTimeStyle} type="text" name="closingTime" placeholder="Close" />  */}
@@ -337,8 +306,7 @@ resetValues() {
                                 className={ styles.btns} 
                                 onClick={ this.onSubmit}>
                                     Register Restaurant
-                            </button>
-                                      
+                            </button>                                  
                             </div>
                             <img 
                                   src="BigFood.png" 
