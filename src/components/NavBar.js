@@ -27,7 +27,7 @@ class NavBar extends React.Component {
         <div className={ styles.container }>
             <div className={ styles.TopBar }>
                 <Link to="/" className={styles.header }>
-                    FoodApp
+                    FoodApp Manager Page
                 </Link>
                 <div className={ styles.buttons }>
                     <Link to="/restaurant">
@@ -43,7 +43,7 @@ class NavBar extends React.Component {
                     {
                         this.props.login ?
                             <button className={ styles.leftbuttons } onClick= { this.toggleLogin.bind(this)}>
-                                User Login
+                                Manager Login
                             </button>
                         : null
                     }

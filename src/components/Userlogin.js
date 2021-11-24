@@ -100,26 +100,6 @@ export default class Userlogin extends Component {
                 </div>
                 <div className={ styles.checklogin }>
                     <div className={ styles.checkcontainer }>
-                        <div className={ styles.radioUser }>
-                            <input 
-                                type="radio" 
-                                id="user" 
-                                name="choose" 
-                                value="User" 
-                                onChange={ this.handleChange }>
-                            </input>
-                            <label htmlFor="user"> User</label><br/>
-                        </div>
-                        <div className={ styles.radioRestaurant }>
-                            <input 
-                                type="radio" 
-                                id="restaurant" 
-                                name="choose" 
-                                value="Restaurant" 
-                                onChange={ this.handleChange }>
-                            </input>
-                            <label htmlFor="restaurant"> Restaurant</label><br/>
-                        </div>
                     </div>
                     <button className={ styles.button } onClick={( this.submitLogin )}>Login</button>
                 </div>
