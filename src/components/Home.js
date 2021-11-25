@@ -1,8 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import NavBar from './NavBar'
 import AllRestaurants from './AllRestaurants'
-import Footer from './Footer'
 import styles from './modules/Home.module.css'
 
 class Home extends React.Component {
@@ -15,7 +13,7 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        axios.get('https://awaproject5db.herokuapp.com/restaurants')
+        axios.get('https://awaproject5db.herokuapp.com/restaurant')
             .then(res => {
                 this.setState({ items: res.data });
             })
@@ -30,7 +28,7 @@ class Home extends React.Component {
 
     render() {
         return (
-            <><NavBar register login/>
+            <>
             <div className={ styles.search }>
                 <div className={ styles.searchText }>
                 Search <div className={ styles.bar }><input 
@@ -44,7 +42,6 @@ class Home extends React.Component {
                 <img src="BigFood.png" alt="Food" className={ styles.image }/>
             </div>
             <AllRestaurants items={ this.state.items.filter((item) => item.name.toLowerCase().includes(this.state.findString.toLowerCase())) }/>
-            <Footer />
             </>
         )
     }

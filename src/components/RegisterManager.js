@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import styles from './modules/register.module.css'
-import NavBar from './NavBar'
-import Footer from './Footer'
 import axios from 'axios';
 
 export default class RegisterRestaurant extends Component {
@@ -97,7 +95,6 @@ export default class RegisterRestaurant extends Component {
     render() {
         return (
             <div>
-                <NavBar />
                     <div className={ styles.container }>
                         <img src="BigFood.png" alt="Food" className={ styles.imageUser }/>
                             <div className={ styles.registerContainer }>
@@ -143,8 +140,8 @@ export default class RegisterRestaurant extends Component {
                                       </button>
                                 </div>
                             </div>
-                      </div>
-                <Footer />
+                        </div>
+
             </div>
               )
     }
