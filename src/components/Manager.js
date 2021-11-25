@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import NavBar from './NavBar'
-import Footer from './Footer'
 import styles from './modules/Manager.module.css'
 import { Link } from 'react-router-dom'
 
@@ -35,7 +33,6 @@ export default class Manager extends Component {
     render() {
         return (
             <div>
-                <NavBar />
                 <div className={ styles.buttonfield }>
                     <div className={ styles.leftbuttonscontainer }>
                         <Link to="newproduct">
@@ -62,7 +59,6 @@ export default class Manager extends Component {
                 <div className={ styles.spacer }>
                     All categories and products of the restaurant goes here. If products are clicked from here, it takes you to edit that product
                 </div>
-                <Footer />
             </div>
         )
     }

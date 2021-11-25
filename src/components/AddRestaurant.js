@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import styles from './modules/register.module.css'
-import NavBar from './NavBar'
-import Footer from './Footer'
 import axios from 'axios';
 
 export default class RegisterRestaurant extends Component {
@@ -188,7 +186,6 @@ resetValues() {
     render() {
         return (
             <div>
-                <NavBar />
                     <div className={ styles.container }>
                         <div className={ styles.registerContainer }>
                             <div className={ styles.row }>
@@ -309,11 +306,10 @@ resetValues() {
                             </button>                                  
                             </div>
                             <img 
-                                  src="BigFood.png" 
+                                  src="/BigFood.png" 
                                   alt="Food" 
                                   className={ styles.imageRestaurant }/>
                     </div>  
-                <Footer />
             </div>
         )
     }

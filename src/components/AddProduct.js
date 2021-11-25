@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import styles from './modules/addProduct.module.css'
-import NavBar from './NavBar'
-import Footer from './Footer';
 import axios from 'axios';
 
 export default class AddProduct extends Component {
@@ -144,7 +142,6 @@ export default class AddProduct extends Component {
     render() {
         return (
             <div>
-                <NavBar />
                 <div className={ styles.page }>
                     <div className={ styles.flexbox }>
                         <div className={ styles.container }>
@@ -251,7 +248,6 @@ export default class AddProduct extends Component {
                     </div>
                 : null }
                 <div className={ styles.spacer }></div>
-                <Footer />
             </div>
         )
     }
