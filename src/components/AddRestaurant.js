@@ -6,7 +6,6 @@ export default class RegisterRestaurant extends Component {
   constructor(props) {
     super(props);
 
-
     this.state = {
         name: '',
         address: '',

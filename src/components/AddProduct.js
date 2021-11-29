@@ -3,7 +3,7 @@ import styles from './modules/addProduct.module.css'
 import axios from 'axios';
 import { useParams } from 'react-router-dom'
 
-function AddProduct() {     //setCategories goes one behind the valuee that is in category select field!!
+function AddProduct() {             //Add imageUrl field to product table in database
 
     const { restaurantId } = useParams();
 
@@ -25,6 +25,7 @@ function AddProduct() {     //setCategories goes one behind the valuee that is i
         axios.get('http://localhost/category/' + restaurantId)
             .then(res => {
                 setCategories(res.data);
+                setCategory(res.data[0].idcategory);
             })
             .catch(function (error) {
                 console.log(error);
@@ -72,7 +73,6 @@ function AddProduct() {     //setCategories goes one behind the valuee that is i
     }
     const onChangeCategory = (e) => {
         setCategory(e.target.value)
-        console.log(category)
     }
 
     const onSubmit = (e) => {
@@ -110,21 +110,13 @@ function AddProduct() {     //setCategories goes one behind the valuee that is i
     const sendToAPI = () => {
         if (nameE !== true && descriptionE !== true && priceE !== true) {
             let productObject = {
-                idcategory: 65,     //GET THIS SOMEHOW FROM CATEGORIES
+                idcategory: category,
                 name: name,
                 description: description,
                 price: price
+                //imageUrl: ''
             }
             console.log(productObject)
-
-            axios.post('https://awaproject5db.herokuapp.com/product', productObject)
-            .then((res) => {
-                console.log(res.data)
-                resetValues();
-            }).catch((error) => {
-                console.log(error)
-                resetValues();
-            });
 
             if (image !== null) {
                 const formData = new FormData();
@@ -136,12 +128,34 @@ function AddProduct() {     //setCategories goes one behind the valuee that is i
                 axios.post('https://awaproject5db.herokuapp.com/upload', formData, config)
                 .then((res) => {
                     console.log(res.data)
+                    //productObject.imageUrl = res.data.url
+
+                    axios.post('https://awaproject5db.herokuapp.com/product', productObject)
+                        .then((res) => {
+                            console.log(res.data)
+                            resetValues();
+                        }).catch((error) => {
+                            console.log(error)
+                            resetValues();
+                        });
+
                     var var4 = document.getElementById("single");
                     setImage(null);
                     var4.value = null;
                 }).catch((error) => {
                     console.log(error)
                 });
+            } 
+            else {
+
+                axios.post('https://awaproject5db.herokuapp.com/product', productObject)
+                    .then((res) => {
+                        console.log(res.data)
+                        resetValues();
+                    }).catch((error) => {
+                        console.log(error)
+                        resetValues();
+                    });
             }
             
         }
@@ -239,11 +253,12 @@ function AddProduct() {     //setCategories goes one behind the valuee that is i
                             Category:
                         </label>
                         <select 
+                            name="category"
                             className={ styles.selectField }
-                            value={ category }
+                            id="select"
                             onChange={ onChangeCategory.bind(this) }>
                                 {categories.map((option) => (
-                                    <option key={ option.name }>{ option.name }</option>
+                                    <option key={ option.idcategory } value={option.idcategory} >{ option.name }</option>
                                 ))}
                         </select>
                         <button className={ styles.addnewBtn } onClick={ toggleAddCategory.bind(this) }>Add new</button>

@@ -43,7 +43,7 @@ function App() {
       <UserAuthContext.Provider value={ userAuthData }>
       <div>
         <UserAuthContext.Consumer>
-           { value => value.jwt ? <NavBar  AddRestaurant Managerview logout/> : <NavBar register login />}
+           { value => value.jwt ? <NavBar AddRestaurant Managerview logout/> : <NavBar register login />}
         </UserAuthContext.Consumer>
         <Routes>
           <Route path="/" element={ <Home /> } />
