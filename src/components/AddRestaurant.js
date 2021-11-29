@@ -6,12 +6,6 @@ export default class RegisterRestaurant extends Component {
   constructor(props) {
     super(props);
 
-    // this.onChangeName = this.onChangeName.bind(this);
-    // this.onChangeAddress = this.onChangeAddress.bind(this);
-    // this.onChangePhone = this.onChangePhone.bind(this);
-    // this.onChangeOperetingHours = this.onChangeOperetingHours.bind(this);
-    // this.onChangeType = this.onChangeType.bind(this);
-    // this.submitRegister = this.submitRegister.bind(this);
 
     this.state = {
         name: '',
@@ -55,29 +49,6 @@ handleChange = e => {
     this.setState({ price: value });
 }
 
-// submitRegister(e) {
-//     e.preventDefault();
-//     const restaurantObject = {
-
-//         name: this.state.name,
-//         address: this.state.address,
-//         phone: this.state.phone,
-//         operatingHours: this.state.operatingHours,
-//         type: this.state.type,
-//         price: this.state.price
-//     };
-//     console.log(restaurantObject);
-
-    // axios.post('http://localhost:4000/users/create', userObject)
-    //     .then((res) => {
-    //         console.log(res.data)
-    //     }).catch((error) => {
-    //         console.log(error)
-    // });
-
-//     this.setState({ name: '', adress: '', phone: '',operatingHours: '', type: '', price: ''})  
-    
-// };
 
 onSubmit = (event) => {
   const errs = [] 
@@ -117,22 +88,25 @@ onSubmit = (event) => {
 }
 
 sendToAPI() {
-  if (this.state.nameE !== true && this.state.address !== true && this.state.phone !== true && 
-    this.state.operatingHours !==true && this.state.type !== true &&  this.state.price !== true) {
-        let restaurantObject = {
-            name: this.state.name,
-            description: this.state.address,
-            operatingHours: this.state.operatingHours,
-            type:this.state.type,
-            price: this.state.price  
-        }
+  if (this.state.nameE !== true && this.state.address !== true &&  this.state.operatingHours !==true 
+        && this.state.type !== true &&  this.state.price !== true) {
+            let restaurantObject = {
+                idmanager: 5,           //Get this from manager
+                name: this.state.name,
+                address: this.state.address,
+                type:this.state.type,
+                price: this.state.price,
+                operatingHours: this.state.operatingHours  
+            }
         console.log(restaurantObject)
 
-        axios.post('https://awaproject5db.herokuapp.com/restaurant/create', restaurantObject)
+        axios.post('https://awaproject5db.herokuapp.com/restaurant/', restaurantObject)
         .then((res) => {
             console.log(res.data)
+            this.resetValues();
         }).catch((error) => {
             console.log(error)
+            this.resetValues();
         });
 
         if (this.state.image !== null) {
@@ -149,7 +123,7 @@ sendToAPI() {
                 console.log(error)
             });
         }
-      this.resetValues();
+      
     }
 
 }
