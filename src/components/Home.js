@@ -15,7 +15,11 @@ class Home extends React.Component {
     componentDidMount() {
         axios.get('https://awaproject5db.herokuapp.com/restaurant')
             .then(res => {
-                this.setState({ items: res.data });
+                console.log(res.data)
+                if (res.data.errno) {
+                    
+                }
+                else this.setState({ items: res.data });
             })
             .catch(function (error) {
                 console.log(error);

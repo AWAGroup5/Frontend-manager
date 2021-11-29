@@ -1,65 +1,62 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import styles from './modules/Manager.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
-export default class Manager extends Component {
-    constructor(props) {
-        super(props);
-        this.state= {
-            history: false,
-            orderStatus: ''
-        };
-    }
+export default function Manager() {
+    
+    const { restaurantId } = useParams();
 
-    orderStatus() {
-        if (this.state.history === false)
+    const [history, setHistory] = useState(false);
+    const [orderStatus, setOrderStatus] = useState('');
+
+    const orderStatusfunc = () => {
+        if (history === false)
             return <>
                 <div className={ styles.orderBox }>
                     <label name="order">Order goes here</label>
-                    <input className={ styles.radio } type="radio" id="received" name="order" onChange={ this.handleChange.bind(this) }></input>
-                    <input className={ styles.radio } type="radio" id="cooking" name="order" onChange={ this.handleChange.bind(this) }></input>
-                    <input className={ styles.radio } type="radio" id="delivery" name="order" onChange={ this.handleChange.bind(this) }></input>
-                    <input className={ styles.radio } type="radio" id="done" name="order" onChange={ this.handleChange.bind(this) }></input>
-                    { this.state.orderStatus }
+                    <input className={ styles.radio } type="radio" id="received" name="order" onChange={ handleChange.bind(this) }></input>
+                    <input className={ styles.radio } type="radio" id="cooking" name="order" onChange={ handleChange.bind(this) }></input>
+                    <input className={ styles.radio } type="radio" id="delivery" name="order" onChange={ handleChange.bind(this) }></input>
+                    <input className={ styles.radio } type="radio" id="done" name="order" onChange={ handleChange.bind(this) }></input>
+                    { orderStatus }
                 </div>
             </>
         else return "order history"
     }
 
-    handleChange(e) {
-        this.setState({ orderStatus: e.target.id })
+    const handleChange = (e) => {
+        setOrderStatus(e.target.id)
     }
 
-    render() {
-        return (
-            <div>
-                <div className={ styles.buttonfield }>
-                    <div className={ styles.leftbuttonscontainer }>
-                        <Link to="newproduct">
-                            <button className={ styles.leftbuttons }>New product</button>
-                        </Link>
-                       
+    return (
+        <div>
+            <div className={ styles.buttonfield }>
+                <div className={ styles.leftbuttonscontainer }>
+                    <Link to="newproduct">
+                        <button className={ styles.leftbuttons }>New product</button>
+                    </Link>
+                    
 
-                    </div>
-                    <div className={ styles.textnbuttons }>
-                        <div className={ styles.textField }>
-                            <div className={ styles.listHeader}>
-                                List of orders
-                            </div>
-                            <div className={ styles.content }>
-                                { this.orderStatus() }
-                            </div>
-                        </div>
-                        <div className={ styles.orderbuttons }>
-                            <button className={ styles.btns } onClick={() => this.setState({ history: true })}>History</button>
-                            <button className={ styles.btns } onClick={() => this.setState({ history: false })}>Current</button>
-                        </div>
-                    </div>
                 </div>
-                <div className={ styles.spacer }>
-                    All categories and products of the restaurant goes here. If products are clicked from here, it takes you to edit that product
+                <div className={ styles.textnbuttons }>
+                    <div className={ styles.textField }>
+                        <div className={ styles.listHeader}>
+                            List of orders
+                        </div>
+                        <div className={ styles.content }>
+                            { orderStatusfunc() }
+                        </div>
+                    </div>
+                    <div className={ styles.orderbuttons }>
+                        <button className={ styles.btns } onClick={() => setHistory(true)}>History</button>
+                        <button className={ styles.btns } onClick={() => setHistory(false)}>Current</button>
+                    </div>
                 </div>
             </div>
-        )
-    }
+            <div className={ styles.spacer }>
+                All categories and products of the restaurant goes here. If products are clicked from here, it takes you to edit that product
+            </div>
+        </div>
+    )
+    
 }

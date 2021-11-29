@@ -7,11 +7,11 @@ import AddRestaurant from './components/AddRestaurant';
 import AddProduct from './components/AddProduct';
 import Footer from './components/Footer';
 import RegisterManager from './components/RegisterManager';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UserAuthContext } from './Contexts'
+//import jwt_decode from "jwt-decode";
 
 const jwtFromStorage = window.localStorage.getItem('appAuthData');
-
 
 function App() {
 
@@ -32,6 +32,12 @@ function App() {
 
   const [ userAuthData, setUserAuthData ] = useState({...initialAuthData});
 
+  useEffect(() => {
+    if (jwtFromStorage != null) {
+      userAuthData.login(jwtFromStorage)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
     return(
       <UserAuthContext.Provider value={ userAuthData }>
@@ -42,8 +48,8 @@ function App() {
         <Routes>
           <Route path="/" element={ <Home /> } />
           <Route path="manReg" element={ <RegisterManager /> } />
-          <Route path="restaurant" element={ <Manager /> } />
-          <Route path="restaurant/newproduct" element={ <AddProduct /> } />
+          <Route path="restaurant/:restaurantId" element={ <Manager /> } />
+          <Route path="restaurant/:restaurantId/newproduct" element={ <AddProduct /> } />
           <Route path="restaurant/addrestaurant" element={ <AddRestaurant /> } />
         </Routes>
         <Footer />
