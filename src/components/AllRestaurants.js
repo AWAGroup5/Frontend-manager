@@ -8,7 +8,7 @@ export default function AllItems(props) {
     <div>
       <div className={ styles.restaurantContainer }>
       {
-        props.items.map(item => <Restaurant key={item} {...item} />)
+        props.items.map((item, index) => <Restaurant key={index} {...item} />)
       }
       </div>
     </div>

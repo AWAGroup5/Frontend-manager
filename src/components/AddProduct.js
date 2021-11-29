@@ -11,12 +11,7 @@ export default class AddProduct extends Component {
             description: '',
             price: '',
             category: '',
-            categories: [
-                "Fast food",
-                "Chinese",
-                "Fine dining",
-                "Wololoo"
-            ],   //Clear categories when connecting to API, categories will be fetched from database
+            categories: [],
             image: null,
             nameE: false,
             descriptionE: false,
@@ -27,6 +22,16 @@ export default class AddProduct extends Component {
         };
     }
 
+    componentDidMount() {
+        axios.get('https://awaproject5db.herokuapp.com/category')
+            .then(res => {
+                this.setState({ categories: res.data });
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
     toggleAddCategory() {
         this.setState({ showAddCategory: !this.state.showAddCategory });
     }
@@ -35,9 +40,20 @@ export default class AddProduct extends Component {
     }
     handleAddCategory = () => {
         if (this.state.tempCat !== '') {
-            this.state.categories.push(this.state.tempCat);
-            this.setState({ showAddCategory: !this.state.showAddCategory });
-            this.setState({ tempCat: '' });
+            const temp = { 
+                idrestaurant: 5,        //GET THIS FROM RESTAURANT
+                name: this.state.tempCat 
+            }
+            axios.post('https://awaproject5db.herokuapp.com/category', temp)
+                .then(res => {
+                    console.log(res)
+                    this.componentDidMount();
+                    this.toggleAddCategory();
+                })
+                
+                .catch(function (error) {
+                    console.log(error);
+                })
         }
     }
     onChangeName(e) {
@@ -91,18 +107,20 @@ export default class AddProduct extends Component {
     sendToAPI() {
         if (this.state.nameE !== true && this.state.descriptionE !== true && this.state.priceE !== true) {
             let productObject = {
+                idcategory: 65,     //GET THIS SOMEHOW FROM CATEGORIES
                 name: this.state.name,
                 description: this.state.description,
-                price: this.state.price,
-                category: this.state.category
+                price: this.state.price
             }
             console.log(productObject)
 
-            axios.post('https://awaproject5db.herokuapp.com/products/create', productObject)
+            axios.post('https://awaproject5db.herokuapp.com/product', productObject)
             .then((res) => {
                 console.log(res.data)
+                this.resetValues();
             }).catch((error) => {
                 console.log(error)
+                this.resetValues();
             });
 
             if (this.state.image !== null) {
@@ -115,11 +133,14 @@ export default class AddProduct extends Component {
                 axios.post('https://awaproject5db.herokuapp.com/upload', formData, config)
                 .then((res) => {
                     console.log(res.data)
+                    var var4 = document.getElementById("single");
+                    this.setState({ image: null });
+                    var4.value = null;
                 }).catch((error) => {
                     console.log(error)
                 });
             }
-            this.resetValues();
+            
         }
     }
 
@@ -127,16 +148,15 @@ export default class AddProduct extends Component {
         var var1 = document.getElementById("name");
         var var2 = document.getElementById("description");
         var var3 = document.getElementById("price");
-        var var4 = document.getElementById("single");
-
+        
         var1.value = '';
         var2.value = '';
         var3.value = '';
-        var4.value = null;
+        
         this.setState({ name: '' });
         this.setState({ description: '' });
         this.setState({ price: '' });
-        this.setState({ image: null });
+        
     }
 
     render() {
@@ -221,7 +241,7 @@ export default class AddProduct extends Component {
                                 value={ this.state.category }
                                 onChange={ this.onChangeCategory.bind(this) }>
                                     {this.state.categories.map((option) => (
-                                        <option key={ option }>{ option }</option>
+                                        <option key={ option.name }>{ option.name }</option>
                                     ))}
                             </select>
                             <button className={ styles.addnewBtn } onClick={ this.toggleAddCategory.bind(this) }>Add new</button>
