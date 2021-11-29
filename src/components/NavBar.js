@@ -35,15 +35,6 @@ class NavBar extends React.Component {
                 </Link>
                 <div className={ styles.buttons }>
                     {
-                        this.props.Managerview ?
-                            <button className={ styles.leftbuttons } >
-                               <Link to="/restaurant" className={ styles.leftbuttons}>
-                                     Manager view
-                                </Link>
-                            </button>
-                        : null
-                    }
-                    {
                         this.props.AddRestaurant ?
                             <button className={ styles.leftbuttons } >
                                 <Link to="/restaurant/addrestaurant" className={ styles.leftbuttons}>

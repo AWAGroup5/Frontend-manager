@@ -53,6 +53,7 @@ handleChange = e => {
     const { value } = e.target;
 
     this.setState({ price: value });
+    this.setState({ priceE: false });
 }
 
 // submitRegister(e) {
@@ -79,7 +80,7 @@ handleChange = e => {
     
 // };
 
-onSubmit = (event) => {
+onSubmit = () => {
   const errs = [] 
   const file = this.state.image;
 
@@ -105,6 +106,9 @@ onSubmit = (event) => {
             this.setState({ addressE: true })
         } else this.setState({ addressE: false })
 
+        if (this.state.price === ''){
+            this.setState({ priceE: true })
+        } else this.setState({ priceE: false })
 
         if (this.state.operatingHours === ''){
             this.setState({ operatingHoursE: true })
@@ -117,23 +121,18 @@ onSubmit = (event) => {
 }
 
 sendToAPI() {
-  if (this.state.nameE !== true && this.state.address !== true && this.state.phone !== true && 
-    this.state.operatingHours !==true && this.state.type !== true &&  this.state.price !== true) {
+  if (this.state.nameE !== true && this.state.addressE !== true && 
+    this.state.operatingHoursE !==true && this.state.typeE !== true &&  this.state.priceE !== true) {
         let restaurantObject = {
+            //idmanager: ""                       //Get the manager id from jwt somehow
             name: this.state.name,
             description: this.state.address,
-            operatingHours: this.state.operatingHours,
+            openInfo: this.state.operatingHours,
             type:this.state.type,
-            price: this.state.price  
+            priceLevel: this.state.price,         //Pass image after database changes  
+            //imageUrl: ""
         }
         console.log(restaurantObject)
-
-        axios.post('https://awaproject5db.herokuapp.com/restaurant/create', restaurantObject)
-        .then((res) => {
-            console.log(res.data)
-        }).catch((error) => {
-            console.log(error)
-        });
 
         if (this.state.image !== null) {
             const formData = new FormData();
@@ -145,10 +144,29 @@ sendToAPI() {
             axios.post('https://awaproject5db.herokuapp.com/upload', formData, config)
             .then((res) => {
                 console.log(res.data)
+                //restaurantObject.imageUrl = res.data.url
+
+                axios.post('https://awaproject5db.herokuapp.com/restaurant', restaurantObject)
+                    .then((res) => {
+                        console.log(res.data)
+                    }).catch((error) => {
+                        console.log(error)
+                    });
+
             }).catch((error) => {
                 console.log(error)
             });
         }
+        
+        else {
+            axios.post('https://awaproject5db.herokuapp.com/restaurant', restaurantObject)
+            .then((res) => {
+                console.log(res.data)
+            }).catch((error) => {
+                console.log(error)
+            });
+        }
+
       this.resetValues();
     }
 
@@ -170,7 +188,6 @@ resetValues() {
     var4.value = '';
     var5.value = null;
    
-
     this.setState({ name: '' });
     this.setState({ address: '' });
     this.setState({ operatingHours: '' });
@@ -178,10 +195,6 @@ resetValues() {
     this.setState({ price: '' });
     this.setState({ image: null });
 }
-
-
-
-
 
     render() {
         return (
@@ -244,21 +257,24 @@ resetValues() {
                                         Price level:
                                   </div>
                                   <div className={ styles.cell }>
-                                        <input 
+                                    <input 
+                                        name="price"
                                         type="radio" 
                                         id="price1" 
                                         value="1" 
                                         onChange={ this.handleChange }>
-                                         </input>
-                                            <label htmlFor="priceLevel">€</label>
+                                    </input>
+                                        <label htmlFor="priceLevel">€</label>
                                     <input 
+                                        name="price"
                                         type="radio" 
                                         id="price2" 
                                         value="2" 
                                         onChange={ this.handleChange }>
                                     </input>
-                                            <label htmlFor="priveLevel">€€</label>
+                                        <label htmlFor="priveLevel">€€</label>
                                     <input 
+                                        name="price"
                                         type="radio" 
                                         id="price3" 
                                         value="3" 
@@ -266,6 +282,9 @@ resetValues() {
                                     </input>
                                             <label htmlFor="priceLevel">€€€</label>
                                 </div>
+                                {
+                                this.state.priceE ? <div className={ styles.error }>Insert price</div>: null
+                                }
                             </div>
                             <div className={ styles.row }>
                                 <div className={ styles.cell }>
@@ -300,8 +319,8 @@ resetValues() {
                             </div>
 
                             <button 
-                                className={ styles.btns} 
-                                onClick={ this.onSubmit}>
+                                className={ styles.btns } 
+                                onClick={ this.onSubmit }>
                                     Register Restaurant
                             </button>                                  
                             </div>
