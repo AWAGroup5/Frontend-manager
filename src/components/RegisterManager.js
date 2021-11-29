@@ -6,10 +6,6 @@ export default class RegisterRestaurant extends Component {
     constructor(props) {
         super(props);
 
-        // this.onChangeUsername = this.onChangeUsername.bind(this);
-        // this.onChangePassword = this.onChangePassword.bind(this);
-        // this.submitRegister = this.submitRegister.bind(this);
-
         this.state = {
             username: '',
             password: '',
@@ -26,27 +22,6 @@ export default class RegisterRestaurant extends Component {
     onChangePassword = (e) => {
         this.setState({ password: e.target.value })
     }
-
-    // submitRegister(e) {
-    //     e.preventDefault();
-    //     const userObject = {
-    //         username: this.state.username,
-    //         password: this.state.password,
-            
-    //     };
-    //     console.log(userObject);
-
-    // axios.post('http://localhost:4000/users/create', userObject)
-    //     .then((res) => {
-    //         console.log(res.data)
-    //     }).catch((error) => {
-    //         console.log(error)
-    // });
-
-    //   this.setState({ username: '', password: ''})  
-    
-    // };
-
 
 
     onSubmit = (e) => {
@@ -69,15 +44,17 @@ export default class RegisterRestaurant extends Component {
             }
             console.log(managerObject);
 
-            axios.post('https://awaproject5db.herokuapp.com/manager/create', managerObject)
+            axios.post('https://awaproject5db.herokuapp.com/manager/register/', managerObject)
             .then((res) => {
                 console.log(res.data)
+                this.resetValues();
+                window.location = "/";
             }).catch((error) => {
                 console.log(error)
             });
 
         }
-        this.resetValues();
+        
     }
 
     resetValues() {

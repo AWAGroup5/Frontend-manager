@@ -6,12 +6,6 @@ export default class RegisterRestaurant extends Component {
   constructor(props) {
     super(props);
 
-    // this.onChangeName = this.onChangeName.bind(this);
-    // this.onChangeAddress = this.onChangeAddress.bind(this);
-    // this.onChangePhone = this.onChangePhone.bind(this);
-    // this.onChangeOperetingHours = this.onChangeOperetingHours.bind(this);
-    // this.onChangeType = this.onChangeType.bind(this);
-    // this.submitRegister = this.submitRegister.bind(this);
 
     this.state = {
         name: '',
@@ -56,29 +50,6 @@ handleChange = e => {
     this.setState({ priceE: false });
 }
 
-// submitRegister(e) {
-//     e.preventDefault();
-//     const restaurantObject = {
-
-//         name: this.state.name,
-//         address: this.state.address,
-//         phone: this.state.phone,
-//         operatingHours: this.state.operatingHours,
-//         type: this.state.type,
-//         price: this.state.price
-//     };
-//     console.log(restaurantObject);
-
-    // axios.post('http://localhost:4000/users/create', userObject)
-    //     .then((res) => {
-    //         console.log(res.data)
-    //     }).catch((error) => {
-    //         console.log(error)
-    // });
-
-//     this.setState({ name: '', adress: '', phone: '',operatingHours: '', type: '', price: ''})  
-    
-// };
 
 onSubmit = () => {
   const errs = [] 
@@ -124,7 +95,7 @@ sendToAPI() {
   if (this.state.nameE !== true && this.state.addressE !== true && 
     this.state.operatingHoursE !==true && this.state.typeE !== true &&  this.state.priceE !== true) {
         let restaurantObject = {
-            //idmanager: ""                       //Get the manager id from jwt somehow
+            idmanager: 5,                      //Get the manager id from jwt somehow
             name: this.state.name,
             description: this.state.address,
             openInfo: this.state.operatingHours,
@@ -166,7 +137,6 @@ sendToAPI() {
                 console.log(error)
             });
         }
-
       this.resetValues();
     }
 

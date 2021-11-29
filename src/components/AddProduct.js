@@ -33,20 +33,24 @@ function AddProduct() {     //setCategories goes one behind the valuee that is i
 
     const toggleAddCategory = () => {
         setShowAddCategory(!showAddCategory);
+
     }
     const onChangeAddCategory = (e) => {
         setTempCat(e.target.value)
     }
+
     const handleAddCategory = () => {
         if (tempCat !== '') {
             const temp = { 
                 idrestaurant: restaurantId,
                 name: tempCat 
+ 
             }
             axios.post('https://awaproject5db.herokuapp.com/category', temp)
                 .then(res => {
                     console.log(res)
                     toggleAddCategory();
+
                 })
                 
                 .catch(function (error) {
@@ -106,7 +110,7 @@ function AddProduct() {     //setCategories goes one behind the valuee that is i
     const sendToAPI = () => {
         if (nameE !== true && descriptionE !== true && priceE !== true) {
             let productObject = {
-                idcategory: category.idcategory,     //GET THIS SOMEHOW FROM CATEGORIES
+                idcategory: 65,     //GET THIS SOMEHOW FROM CATEGORIES
                 name: name,
                 description: description,
                 price: price
@@ -152,10 +156,10 @@ function AddProduct() {     //setCategories goes one behind the valuee that is i
         var2.value = '';
         var3.value = '';
         
+
         setName('');
         setDescription('');
         setPrice('');
-        
     }
 
     return (
