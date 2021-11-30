@@ -55,6 +55,7 @@ export default function Userlogin(props) {
                     setUsername('')
                     setPassword('')
                     props.closePopup();
+                    window.location = '/';
                 }, 1500);
             } catch (error) {
                 console.error(error.message);

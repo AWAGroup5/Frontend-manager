@@ -22,6 +22,7 @@ function AddProduct() {             //Add imageUrl field to product table in dat
     const [tempCat, setTempCat] = useState('');
 
     useEffect(() => {
+        console.log("useEffect")
         axios.get('http://localhost/category/' + restaurantId)
             .then(res => {
                 setCategories(res.data);
@@ -30,11 +31,10 @@ function AddProduct() {             //Add imageUrl field to product table in dat
             .catch(function (error) {
                 console.log(error);
             })
-    }, [])
+    }, [restaurantId, showAddCategory])
 
     const toggleAddCategory = () => {
         setShowAddCategory(!showAddCategory);
-
     }
     const onChangeAddCategory = (e) => {
         setTempCat(e.target.value)
@@ -45,13 +45,11 @@ function AddProduct() {             //Add imageUrl field to product table in dat
             const temp = { 
                 idrestaurant: restaurantId,
                 name: tempCat 
- 
             }
             axios.post('https://awaproject5db.herokuapp.com/category', temp)
                 .then(res => {
                     console.log(res)
                     toggleAddCategory();
-
                 })
                 
                 .catch(function (error) {
@@ -76,19 +74,16 @@ function AddProduct() {             //Add imageUrl field to product table in dat
     }
 
     const onSubmit = (e) => {
-        const errs = [] 
         const file = image;
 
         if (file !== undefined && file !== null) {
             const types = ['image/png', 'image/jpeg']
 
             if (types.every(type => file.type !== type)) {
-                errs.push(`'${file.type}' is not a supported format`)
                 return setFormatE(true)
             } else setFormatE(false)
         
             if (file.size > 150000) {
-                errs.push(`'${file.name}' is too large, please pick a smaller file`)
                 return setSizeE(true)
             } else setSizeE(false)
         }
@@ -113,10 +108,10 @@ function AddProduct() {             //Add imageUrl field to product table in dat
                 idcategory: category,
                 name: name,
                 description: description,
-                price: price
-                //imageUrl: ''
+                price: price,
+                imageUrl: ''
             }
-            console.log(productObject)
+            //console.log(productObject)
 
             if (image !== null) {
                 const formData = new FormData();
@@ -124,11 +119,10 @@ function AddProduct() {             //Add imageUrl field to product table in dat
                 const config ={
                     headers: { 'content-type': 'multipart/form-data'}
                 }
-
+                
                 axios.post('https://awaproject5db.herokuapp.com/upload', formData, config)
                 .then((res) => {
-                    console.log(res.data)
-                    //productObject.imageUrl = res.data.url
+                    productObject.imageUrl = res.data
 
                     axios.post('https://awaproject5db.herokuapp.com/product', productObject)
                         .then((res) => {
@@ -143,14 +137,15 @@ function AddProduct() {             //Add imageUrl field to product table in dat
                     setImage(null);
                     var4.value = null;
                 }).catch((error) => {
+                    console.log("image upload error")
                     console.log(error)
                 });
             } 
             else {
-
+                console.log("Toinen yritys")
                 axios.post('https://awaproject5db.herokuapp.com/product', productObject)
                     .then((res) => {
-                        console.log(res.data)
+                        console.log("Product added with no picture")
                         resetValues();
                     }).catch((error) => {
                         console.log(error)

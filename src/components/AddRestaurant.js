@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import styles from './modules/register.module.css'
 import axios from 'axios';
+import jwt from "jsonwebtoken";
 
 export default class RegisterRestaurant extends Component {
   constructor(props) {
@@ -23,25 +24,21 @@ export default class RegisterRestaurant extends Component {
     };
 }
 
-
 onChangeName = (e) => {
     this.setState({ name: e.target.value })
 }
-
 onChangeAddress = (e) => {
     this.setState({ address: e.target.value })
 }
-
-
 onChangeOperetingHours = (e) => {
     this.setState({ operatingHours: e.target.value })
 }
-
+onChangeIMG = (e) => {
+    this.setState({ image: e.target.files[0] })
+}
 onChangeType = (e) => {
     this.setState({ type: e.target.value })
 }
-
-
 handleChange = e => {
     const { value } = e.target;
 
@@ -49,58 +46,62 @@ handleChange = e => {
     this.setState({ priceE: false });
 }
 
-
 onSubmit = () => {
-  const errs = [] 
   const file = this.state.image;
 
     if (file !== undefined && file !== null) {
         const types = ['image/png', 'image/jpeg']
 
         if (types.every(type => file.type !== type)) {
-            errs.push(`'${file.type}' is not a supported format`)
             return this.setState({ formatE: true })
         } else this.setState({ formatE: false })
   
         if (file.size > 150000) {
-            errs.push(`'${file.name}' is too large, please pick a smaller file`)
             return this.setState({ sizeE: true })
         } else this.setState({ sizeE: false })
     }
 
-        if (this.state.name === ''){
-            this.setState({ nameE: true })
-        } else this.setState({ nameE: false })
+    if (this.state.name === ''){
+        this.setState({ nameE: true })
+    } else this.setState({ nameE: false })
 
-        if (this.state.address === ''){
-            this.setState({ addressE: true })
-        } else this.setState({ addressE: false })
+    if (this.state.address === ''){
+        this.setState({ addressE: true })
+    } else this.setState({ addressE: false })
 
-        if (this.state.price === ''){
-            this.setState({ priceE: true })
-        } else this.setState({ priceE: false })
+    if (this.state.price === ''){
+        this.setState({ priceE: true })
+    } else this.setState({ priceE: false })
 
-        if (this.state.operatingHours === ''){
-            this.setState({ operatingHoursE: true })
-        } else this.setState({ operatingHoursE: false })
+    if (this.state.operatingHours === ''){
+        this.setState({ operatingHoursE: true })
+    } else this.setState({ operatingHoursE: false })
 
-        if (this.state.type === ''){
-            this.setState({ typeE: true })
-        } else this.setState({ typeE: false }, () => this.sendToAPI())
+    if (this.state.type === ''){
+        this.setState({ typeE: true })
+    } else this.setState({ typeE: false }, () => this.sendToAPI())
 
 }
 
 sendToAPI() {
+    const decodedJwt = jwt.decode(window.localStorage.getItem('appAuthData'));
+    let id = null;
+    if (decodedJwt != null) {
+        id = decodedJwt.user.id
+    } else {
+        id = null
+    }
+
   if (this.state.nameE !== true && this.state.addressE !== true && 
     this.state.operatingHoursE !==true && this.state.typeE !== true &&  this.state.priceE !== true) {
         let restaurantObject = {
-            idmanager: 45,                      //Get the manager id from jwt somehow
+            idmanager: id,
             name: this.state.name,
-            description: this.state.address,
+            address: this.state.address,
             openInfo: this.state.operatingHours,
             type:this.state.type,
             priceLevel: this.state.price,          
-            imageUrl: ""
+            imageUrl: ''
         }
         
 
@@ -113,9 +114,7 @@ sendToAPI() {
 
             axios.post('https://awaproject5db.herokuapp.com/upload', formData, config)
             .then((res) => {
-                console.log(res.data)
-                restaurantObject.imageUrl = res.data.url
-                console.log(restaurantObject)
+                restaurantObject.imageUrl = res.data
 
                 axios.post('https://awaproject5db.herokuapp.com/restaurant', restaurantObject)
                     .then((res) => {
@@ -125,6 +124,10 @@ sendToAPI() {
                         console.log(error)
                     });
 
+                var var5 = document.getElementById("image");
+                var5.value = null;
+                this.setState({ image: null });
+
             }).catch((error) => {
                 console.log(error)
             });
@@ -133,6 +136,7 @@ sendToAPI() {
         else {
             axios.post('https://awaproject5db.herokuapp.com/restaurant', restaurantObject)
             .then((res) => {
+                console.log("Restaurant added with no picture")
                 console.log(res.data)
                 this.resetValues();
             }).catch((error) => {
@@ -152,20 +156,18 @@ resetValues() {
     document.getElementById("price1").checked = false;
     document.getElementById("price2").checked = false;
     document.getElementById("price3").checked = false;
-    var var5 = document.getElementById("image");
-
+    
     var1.value = '';
     var2.value = '';
     var3.value = '';
     var4.value = '';
-    var5.value = null;
-   
+    
     this.setState({ name: '' });
     this.setState({ address: '' });
     this.setState({ operatingHours: '' });
     this.setState({ type: '' });
     this.setState({ price: '' });
-    this.setState({ image: null });
+    
 }
 
     render() {
@@ -285,11 +287,17 @@ resetValues() {
                                     <input
                                         type="file"
                                         accept="image/png, image/jpeg"
-                                        id="image">
+                                        id="image"
+                                        onChange={ this.onChangeIMG.bind(this) }>
                                     </input>
                                 </div>
                             </div>
-
+                            {
+                                this.state.formatE ? <div className={ styles.error }>Wrong format</div>: null
+                            }
+                            {
+                                this.state.sizeE ? <div className={ styles.error }>Too big file</div>: null
+                            }
                             <button 
                                 className={ styles.btns } 
                                 onClick={ this.onSubmit }>
