@@ -1,54 +1,68 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import AllRestaurants from './AllRestaurants'
 import styles from './modules/Home.module.css'
+import jwt from "jsonwebtoken";
 
-class Home extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            items: [],
-            findString: ""
-        }
+function Home() {
+
+    const [items, setItems] = useState([]);
+    const [findString, setFindString] = useState('');
+
+    const decodedJwt = jwt.decode(window.localStorage.getItem('appAuthData'));
+    let idmanager = null;
+    if (decodedJwt != null) {
+        idmanager = decodedJwt.user.id
+    } else {
+        idmanager = null
     }
 
-    componentDidMount() {
-        axios.get('https://awaproject5db.herokuapp.com/restaurant')
-            .then(res => {
-                console.log(res.data)
-                if (res.data.errno) {
-                    
-                }
-                else this.setState({ items: res.data });
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
+    useEffect(() => {
+        console.log(idmanager)
+        if (idmanager != null) {
+        
+            axios.get('http://localhost/restaurant/' + idmanager)
+                .then(res => {
+                    console.log(res.data)
+                    if (res.data.errno) {
+                        console.log("No restaurants found")
+                    }
+                    else if (res.data == null) {
+                        console.log("database error")
+                    }
+                    else { 
+                        setItems(res.data);
+                        console.log(items) 
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+            }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const whenSearching = (event) => {
+        setFindString(event.target.value);
     }
 
-    whenSearching = (event) => {
-        this.setState({ findString: event.target.value });
-    }
-
-    render() {
-        return (
-            <>
-            <div className={ styles.search }>
-                <div className={ styles.searchText }>
-                Search <div className={ styles.bar }><input 
-                            className={ styles.innerbar }
-                            type="text" 
-                            placeholder="Search for restaurant"
-                            onChange={ this.whenSearching } 
-                            value={ this.state.findString }
-                        /></div>
-                </div>
-                <img src="BigFood.png" alt="Food" className={ styles.image }/>
+    return (
+        <>
+        <div className={ styles.search }>
+            <div className={ styles.searchText }>
+            Search <div className={ styles.bar }><input 
+                        className={ styles.innerbar }
+                        type="text" 
+                        placeholder="Search for restaurant"
+                        onChange={ whenSearching } 
+                        value={ findString }
+                    /></div>
             </div>
-            <AllRestaurants items={ this.state.items.filter((item) => item.name.toLowerCase().includes(this.state.findString.toLowerCase())) }/>
-            </>
-        )
-    }
+            <img src="BigFood.png" alt="Food" className={ styles.image }/>
+        </div>
+        <AllRestaurants items={ items.filter((item) => item.name.toLowerCase().includes(findString.toLowerCase())) }/>
+        </>
+    )
 }
 
 export default Home;

@@ -23,6 +23,7 @@ class NavBar extends React.Component {
 
     toggleLogout() {
         this.context.logout();
+        window.location = '/';
     }
 
     render() {

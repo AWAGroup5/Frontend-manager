@@ -9,14 +9,13 @@ import Footer from './components/Footer';
 import RegisterManager from './components/RegisterManager';
 import { useState, useEffect } from 'react';
 import { UserAuthContext } from './Contexts'
-//import jwt_decode from "jwt-decode";
 
 const jwtFromStorage = window.localStorage.getItem('appAuthData');
 
 function App() {
 
   const initialAuthData = {
-    jwt: jwtFromStorage,
+    jwt: null,
     login: (newValueForJwt) => {
       const newAuthData = { ...userAuthData,
           jwt: newValueForJwt

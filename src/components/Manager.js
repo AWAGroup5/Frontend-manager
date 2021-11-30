@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './modules/Manager.module.css'
 import { Link, useParams } from 'react-router-dom'
+import axios from 'axios';
 
 export default function Manager() {
     
@@ -8,6 +9,18 @@ export default function Manager() {
 
     const [history, setHistory] = useState(false);
     const [orderStatus, setOrderStatus] = useState('');
+/*
+    useEffect(() => {
+        axios.get('/orders/' + restaurantId)
+        .then(res => {
+
+        })
+
+    }, [])
+   */ 
+    const handleChange = (e) => {
+        setOrderStatus(e.target.id)
+    }
 
     const orderStatusfunc = () => {
         if (history === false)
@@ -22,10 +35,6 @@ export default function Manager() {
                 </div>
             </>
         else return "order history"
-    }
-
-    const handleChange = (e) => {
-        setOrderStatus(e.target.id)
     }
 
     return (
