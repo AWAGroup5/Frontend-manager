@@ -95,15 +95,15 @@ sendToAPI() {
   if (this.state.nameE !== true && this.state.addressE !== true && 
     this.state.operatingHoursE !==true && this.state.typeE !== true &&  this.state.priceE !== true) {
         let restaurantObject = {
-            idmanager: 5,                      //Get the manager id from jwt somehow
+            idmanager: 45,                      //Get the manager id from jwt somehow
             name: this.state.name,
             description: this.state.address,
             openInfo: this.state.operatingHours,
             type:this.state.type,
-            priceLevel: this.state.price,         //Pass image after database changes  
-            //imageUrl: ""
+            priceLevel: this.state.price,          
+            imageUrl: ""
         }
-        console.log(restaurantObject)
+        
 
         if (this.state.image !== null) {
             const formData = new FormData();
@@ -115,11 +115,13 @@ sendToAPI() {
             axios.post('https://awaproject5db.herokuapp.com/upload', formData, config)
             .then((res) => {
                 console.log(res.data)
-                //restaurantObject.imageUrl = res.data.url
+                restaurantObject.imageUrl = res.data.url
+                console.log(restaurantObject)
 
                 axios.post('https://awaproject5db.herokuapp.com/restaurant', restaurantObject)
                     .then((res) => {
                         console.log(res.data)
+                        this.resetValues();
                     }).catch((error) => {
                         console.log(error)
                     });
@@ -133,11 +135,12 @@ sendToAPI() {
             axios.post('https://awaproject5db.herokuapp.com/restaurant', restaurantObject)
             .then((res) => {
                 console.log(res.data)
+                this.resetValues();
             }).catch((error) => {
                 console.log(error)
             });
         }
-      this.resetValues();
+      
     }
 
 }

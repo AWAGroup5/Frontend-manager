@@ -8,16 +8,16 @@ export default class Restaurant extends Component {
         return (
             <Link to={{ pathname: '/restaurant/' + this.props.idrestaurant }}>
             <div className={ styles.container }>
-                <img src="Food.jpg" alt="food" className={ styles.image }/>
+                <img src="https://res.cloudinary.com/hmh3e2p9f/image/upload/v1637253933/eakfbns9bxyn9ugbsejd.jpg" alt="food" className={ styles.image }/>
                     <div className={ styles.headercontainer }>
                         <div className={ styles.header }>
                             { this.props.name }
                         </div>
                         <div className={ styles.greytext }>
-                            { this.props.description }
+                            { this.props.type }
                         </div>
                         <div className={ styles.greytext }>
-                            { str.repeat(this.props.price) }
+                            { str.repeat(this.props.priceLevel) }
                         </div>
                     </div>
             </div>
