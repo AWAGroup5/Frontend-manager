@@ -35,7 +35,7 @@
     background-color: white;
     height: 500px;
     margin: 20px;
-    width: 500px;
+    width: 600px;
     border: 1px solid black;
     border-radius: 10px;
 }
@@ -64,10 +64,4 @@
     width: 220px;
     height: 40px;
     border-radius: 10px;
-}
-
-.radio {
-    height: 30px;
-    width: 30px;
-    margin: 10px;
 }
