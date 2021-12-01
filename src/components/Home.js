@@ -21,7 +21,7 @@ function Home() {
         console.log(idmanager)
         if (idmanager != null) {
         
-            axios.get('http://localhost/restaurant/' + idmanager)
+            axios.get('https://awaproject5db.herokuapp.com/restaurant/' + idmanager)
                 .then(res => {
                     console.log(res.data)
                     if (res.data.errno) {
