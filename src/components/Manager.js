@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styles from './modules/Manager.module.css'
+import Order from './Order';
 import { Link, useParams } from 'react-router-dom'
 import axios from 'axios';
 
@@ -8,35 +9,29 @@ export default function Manager() {
     const { restaurantId } = useParams();
 
     const [history, setHistory] = useState(false);
-    const [orderStatus, setOrderStatus] = useState('');
-/*
-    useEffect(() => {
-        axios.get('/orders/' + restaurantId)
-        .then(res => {
+    const [orders, setOrders] = useState([]);
 
+    useEffect(() => {
+        axios.get('https://awaproject5db.herokuapp.com/order/restaurant/' + restaurantId)
+        .then(res => {
+            console.log(res.data)
+            setOrders(res.data)
+        }).catch(function(error) {
+            console.log(error)
         })
 
     }, [])
-   */ 
-    const handleChange = (e) => {
-        setOrderStatus(e.target.id)
-    }
-
-    const orderStatusfunc = () => {
-        if (history === false)
-            return <>
-                <div className={ styles.orderBox }>
-                    <label name="order">Order goes here</label>
-                    <input className={ styles.radio } type="radio" id="received" name="order" onChange={ handleChange.bind(this) }></input>
-                    <input className={ styles.radio } type="radio" id="cooking" name="order" onChange={ handleChange.bind(this) }></input>
-                    <input className={ styles.radio } type="radio" id="delivery" name="order" onChange={ handleChange.bind(this) }></input>
-                    <input className={ styles.radio } type="radio" id="done" name="order" onChange={ handleChange.bind(this) }></input>
-                    { orderStatus }
-                </div>
-            </>
-        else return "order history"
-    }
-
+                //Needs a check if status is done
+    const orderHistory = orders.map((orders,index) => 
+        {if (orders.status === "done") {
+            return(
+            <div key={index} className={ styles.orderbuttons }>
+                <div>Order ID: { orders.idorder }</div>
+                <div>Status: { orders.status }</div>
+             </div> )
+        }}
+    ) 
+    
     return (
         <div>
             <div className={ styles.buttonfield }>
@@ -46,14 +41,18 @@ export default function Manager() {
                     </Link>
                     
 
-                </div>
+                </div> 
                 <div className={ styles.textnbuttons }>
                     <div className={ styles.textField }>
                         <div className={ styles.listHeader}>
                             List of orders
                         </div>
                         <div className={ styles.content }>
-                            { orderStatusfunc() }
+                            { 
+                                history ?
+                                    orderHistory
+                                : orders.map((item, index) => <Order key={index} {...item}/> )
+                            }
                         </div>
                     </div>
                     <div className={ styles.orderbuttons }>
