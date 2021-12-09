@@ -19,17 +19,17 @@ export default function Manager() {
         }).catch(function(error) {
             console.log(error)
         })
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-                //Needs a check if status is done
-    const orderHistory = orders.map((orders,index) => 
-        {if (orders.status === "done") {
+                
+    const orderHistory = orders.map((orders,index) => {
+        if (orders.status === "done") {
             return(
             <div key={index} className={ styles.orderbuttons }>
                 <div>Order ID: { orders.idorder }</div>
                 <div>Status: { orders.status }</div>
              </div> )
-        }}
+        }else return null}
     ) 
     
     return (

@@ -7,14 +7,16 @@ export default class RegisterRestaurant extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = {      //Add description parts
         name: '',
+        description:  '',
         address: '',
         operatingHours: '',
         type: '',
         price: '',
         image: null,
         nameE: false,
+        descE: false,
         addressE: false,
         operatingHoursE: false,
         typeE: false,
@@ -26,6 +28,9 @@ export default class RegisterRestaurant extends Component {
 
 onChangeName = (e) => {
     this.setState({ name: e.target.value })
+}
+onChangeDesc = (e) => {
+    this.setState({ description: e.target.value })
 }
 onChangeAddress = (e) => {
     this.setState({ address: e.target.value })
@@ -56,7 +61,7 @@ onSubmit = () => {
             return this.setState({ formatE: true })
         } else this.setState({ formatE: false })
   
-        if (file.size > 150000) {
+        if (file.size > 1500000) {
             return this.setState({ sizeE: true })
         } else this.setState({ sizeE: false })
     }
@@ -64,6 +69,10 @@ onSubmit = () => {
     if (this.state.name === ''){
         this.setState({ nameE: true })
     } else this.setState({ nameE: false })
+
+    if (this.state.description === ''){
+        this.setState({ descE: true })
+    } else this.setState({ descE: false })
 
     if (this.state.address === ''){
         this.setState({ addressE: true })
@@ -92,11 +101,12 @@ sendToAPI() {
         id = null
     }
 
-  if (this.state.nameE !== true && this.state.addressE !== true && 
+  if (this.state.nameE !== true && this.state.descE !== true && this.state.addressE !== true && 
     this.state.operatingHoursE !==true && this.state.typeE !== true &&  this.state.priceE !== true) {
         let restaurantObject = {
             idmanager: id,
             name: this.state.name,
+            description: this.state.description,
             address: this.state.address,
             openInfo: this.state.operatingHours,
             type:this.state.type,
@@ -153,6 +163,7 @@ resetValues() {
     var var2 = document.getElementById("address");
     var var3 = document.getElementById("operatingHours");
     var var4 = document.getElementById("type");
+    var var5 = document.getElementById("description")
     document.getElementById("price1").checked = false;
     document.getElementById("price2").checked = false;
     document.getElementById("price3").checked = false;
@@ -161,8 +172,10 @@ resetValues() {
     var2.value = '';
     var3.value = '';
     var4.value = '';
+    var5.value = '';
     
     this.setState({ name: '' });
+    this.setState({ description: '' })
     this.setState({ address: '' });
     this.setState({ operatingHours: '' });
     this.setState({ type: '' });
@@ -191,6 +204,23 @@ resetValues() {
                             </div>
                             {
                                 this.state.nameE ? <div className={ styles.error }>Insert name</div>: null
+                            }
+                            <div className={ styles.row }>
+                                <div className={ styles.cell }>
+                                    Description:
+                                </div>
+                                <div className={ styles.cell }>
+                                    <input 
+                                    className={ styles.inputStyle} 
+                                    type="text" 
+                                    id="description" 
+                                    placeholder="Description" 
+                                    onChange={ this.onChangeDesc }>
+                                    </input>
+                                </div>
+                            </div>
+                            {
+                                this.state.descE ? <div className={ styles.error }>Insert description</div>: null
                             }
                             <div className={ styles.row }>
                                 <div className={ styles.cell }>

@@ -14,48 +14,48 @@ const jwtFromStorage = window.localStorage.getItem('appAuthData');
 
 function App() {
 
-  const initialAuthData = {
-    jwt: null,
-    login: (newValueForJwt) => {
-      const newAuthData = { ...userAuthData,
-          jwt: newValueForJwt
+	const initialAuthData = {
+    	jwt: null,
+    	login: (newValueForJwt) => {
+      	const newAuthData = { ...userAuthData,
+        	jwt: newValueForJwt
         };
-      window.localStorage.setItem('appAuthData', newValueForJwt);
-      setUserAuthData(newAuthData);
-    },
-    logout: () => {
-      window.localStorage.removeItem('appAuthData');
-      setUserAuthData({...initialAuthData});
-    }
-  };
+      	window.localStorage.setItem('appAuthData', newValueForJwt);
+      	setUserAuthData(newAuthData);
+        },
+        logout: () => {
+            window.localStorage.removeItem('appAuthData');
+            setUserAuthData({...initialAuthData});
+        }
+  	};
 
-  const [ userAuthData, setUserAuthData ] = useState({...initialAuthData});
+  	const [ userAuthData, setUserAuthData ] = useState({...initialAuthData});
 
-  useEffect(() => {
-    if (jwtFromStorage != null) {
-      userAuthData.login(jwtFromStorage)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  	useEffect(() => {
+		if (jwtFromStorage != null) {
+		userAuthData.login(jwtFromStorage)
+		}
+    	// eslint-disable-next-line react-hooks/exhaustive-deps
+  	}, [])
 
-    return(
-      <UserAuthContext.Provider value={ userAuthData }>
-      <div>
-        <UserAuthContext.Consumer>
-           { value => value.jwt ? <NavBar AddRestaurant Managerview logout/> : <NavBar register login />}
-        </UserAuthContext.Consumer>
-        <Routes>
-          <Route path="/" element={ <Home /> } />
-          <Route path="manReg" element={ <RegisterManager /> } />
-          <Route path="restaurant/:restaurantId" element={ <Manager /> } />
-          <Route path="restaurant/:restaurantId/newproduct" element={ <AddProduct /> } />
-          <Route path="restaurant/addrestaurant" element={ <AddRestaurant /> } />
-        </Routes>
-        <Footer />
-      </div>
-      </UserAuthContext.Provider>
-    );
-  };
+	return(
+		<UserAuthContext.Provider value={ userAuthData }>
+		<div>
+		<UserAuthContext.Consumer>
+			{ value => value.jwt ? <NavBar AddRestaurant Managerview logout/> : <NavBar register login />}
+		</UserAuthContext.Consumer>
+		<Routes>
+			<Route path="/" element={ <Home /> } />
+			<Route path="manReg" element={ <RegisterManager /> } />
+			<Route path="restaurant/:restaurantId" element={ <Manager /> } />
+			<Route path="restaurant/:restaurantId/newproduct" element={ <AddProduct /> } />
+			<Route path="restaurant/addrestaurant" element={ <AddRestaurant /> } />
+		</Routes>
+		<Footer />
+		</div>
+		</UserAuthContext.Provider>
+  	);
+};
 
 
 export default App;

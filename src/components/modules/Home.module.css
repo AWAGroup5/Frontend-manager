@@ -1,12 +1,9 @@
 .restaurantContainer {
-    max-width: 1120px;
+    max-width: 60%;
     margin-left: auto;
     margin-right: auto;
-    display: grid;
-    grid-template-columns: 350px 350px 350px;
-    grid-template-rows: 200px 200px 200px; 
-    column-gap: 10px;
-    row-gap: 15px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .spacer {

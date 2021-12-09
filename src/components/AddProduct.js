@@ -22,8 +22,7 @@ function AddProduct() {             //Add imageUrl field to product table in dat
     const [tempCat, setTempCat] = useState('');
 
     useEffect(() => {
-        console.log("useEffect")
-        axios.get('http://localhost/category/' + restaurantId)
+        axios.get('https://awaproject5db.herokuapp.com/category/' + restaurantId)
             .then(res => {
                 setCategories(res.data);
                 setCategory(res.data[0].idcategory);
@@ -83,7 +82,7 @@ function AddProduct() {             //Add imageUrl field to product table in dat
                 return setFormatE(true)
             } else setFormatE(false)
         
-            if (file.size > 150000) {
+            if (file.size > 1500000) {
                 return setSizeE(true)
             } else setSizeE(false)
         }
