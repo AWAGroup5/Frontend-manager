@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from './modules/addProduct.module.css'
 import axios from 'axios';
+import Loading from './Loading';
 import { useParams } from 'react-router-dom'
 
 function AddProduct() {             //Add imageUrl field to product table in database
@@ -20,6 +21,7 @@ function AddProduct() {             //Add imageUrl field to product table in dat
     const [formatE, setFormatE] = useState(false);
     const [sizeE, setSizeE] = useState(false);
     const [tempCat, setTempCat] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         axios.get('https://awaproject5db.herokuapp.com/category/' + restaurantId)
@@ -45,13 +47,16 @@ function AddProduct() {             //Add imageUrl field to product table in dat
                 idrestaurant: restaurantId,
                 name: tempCat 
             }
+            setIsLoading(true);
             axios.post('https://awaproject5db.herokuapp.com/category', temp)
                 .then(res => {
                     console.log(res)
+                    setIsLoading(false);
                     toggleAddCategory();
                 })
                 
                 .catch(function (error) {
+                    setIsLoading(false);
                     console.log(error);
                 })
         }
@@ -119,15 +124,18 @@ function AddProduct() {             //Add imageUrl field to product table in dat
                     headers: { 'content-type': 'multipart/form-data'}
                 }
                 
+                setIsLoading(true);
                 axios.post('https://awaproject5db.herokuapp.com/upload', formData, config)
                 .then((res) => {
                     productObject.imageUrl = res.data
 
                     axios.post('https://awaproject5db.herokuapp.com/product', productObject)
                         .then((res) => {
+                            setIsLoading(false);
                             console.log(res.data)
                             resetValues();
                         }).catch((error) => {
+                            setIsLoading(false);
                             console.log(error)
                             resetValues();
                         });
@@ -136,17 +144,21 @@ function AddProduct() {             //Add imageUrl field to product table in dat
                     setImage(null);
                     var4.value = null;
                 }).catch((error) => {
+                    setIsLoading(false);
                     console.log("image upload error")
                     console.log(error)
                 });
             } 
             else {
                 console.log("Toinen yritys")
+                setIsLoading(true);
                 axios.post('https://awaproject5db.herokuapp.com/product', productObject)
                     .then((res) => {
+                        setIsLoading(false);
                         console.log("Product added with no picture")
                         resetValues();
                     }).catch((error) => {
+                        setIsLoading(false);
                         console.log(error)
                         resetValues();
                     });
@@ -279,6 +291,9 @@ function AddProduct() {             //Add imageUrl field to product table in dat
                 </div>
             : null }
             <div className={ styles.spacer }></div>
+            {
+                isLoading ? <Loading /> : null
+            }
         </div>
     )
 }

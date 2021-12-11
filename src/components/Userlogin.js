@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import styles from './modules/userlogin.module.css'
 import axios from 'axios';
+import Loading from './Loading';
 import {UserAuthContext} from '../Contexts'
 
 export default function Userlogin(props) {
@@ -10,6 +11,7 @@ export default function Userlogin(props) {
     const [ passE, setPassE ] = useState(false);
     const [ userE, setUserE ] = useState(false);
     const [ error, setError ] = useState(false);
+    const [ isLoading, setIsLoading] = useState(false);
     
     const UserAuthContextValue = useContext(UserAuthContext);
 
@@ -42,6 +44,7 @@ export default function Userlogin(props) {
             console.log(username)
             console.log(password)
 
+            setIsLoading(true);
             try {
                 const result = await axios.post('https://awaproject5db.herokuapp.com/login/manager', null, {
                     auth: {
@@ -51,6 +54,7 @@ export default function Userlogin(props) {
                 })
                 console.log(result);
                 setTimeout(() => {
+                    setIsLoading(false);
                     UserAuthContextValue.login(result.data.jwt);
                     setUsername('')
                     setPassword('')
@@ -60,6 +64,7 @@ export default function Userlogin(props) {
             } catch (error) {
                 console.error(error.message);
                 setTimeout(() => {
+                    setIsLoading(false);
                     setError(true)
                     setUsername('')
                     setPassword('')
@@ -111,6 +116,9 @@ export default function Userlogin(props) {
                 }
             </div>
             </form>
+            {
+                isLoading ? <Loading /> : null
+            }
         </div>
         </>
     )

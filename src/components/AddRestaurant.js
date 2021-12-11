@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './modules/register.module.css'
 import axios from 'axios';
 import jwt from "jsonwebtoken";
+import Loading from './Loading';
 
 export default class RegisterRestaurant extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export default class RegisterRestaurant extends Component {
         priceE: false,
         formatE: false,
         sizeE: false,
+        isLoading: false
     };
 }
 
@@ -121,7 +123,8 @@ sendToAPI() {
             const config ={
                 headers: { 'content-type': 'multipart/form-data'}
             }
-
+        
+            this.setState({ isLoading: true });
             axios.post('https://awaproject5db.herokuapp.com/upload', formData, config)
             .then((res) => {
                 restaurantObject.imageUrl = res.data
@@ -130,8 +133,10 @@ sendToAPI() {
                     .then((res) => {
                         console.log(res.data)
                         this.resetValues();
+                        this.setState({ isLoading: false });
                     }).catch((error) => {
                         console.log(error)
+                        this.setState({ isLoading: false });
                     });
 
                 var var5 = document.getElementById("image");
@@ -140,17 +145,20 @@ sendToAPI() {
 
             }).catch((error) => {
                 console.log(error)
+                this.setState({ isLoading: false });
             });
         }
         
         else {
             axios.post('https://awaproject5db.herokuapp.com/restaurant', restaurantObject)
             .then((res) => {
+                this.setState({ isLoading: false });
                 console.log("Restaurant added with no picture")
                 console.log(res.data)
                 this.resetValues();
             }).catch((error) => {
                 console.log(error)
+                this.setState({ isLoading: false });
             });
         }
       
@@ -338,7 +346,10 @@ resetValues() {
                                   src="/BigFood.png" 
                                   alt="Food" 
                                   className={ styles.imageRestaurant }/>
-                    </div>  
+                    </div> 
+                    {
+                        this.state.isLoading ? <Loading /> : null
+                    } 
             </div>
         )
     }
