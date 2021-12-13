@@ -32,6 +32,12 @@
     color: white;
 }
 
+.inner {
+  width: 8.25em;
+  height: 8.25em;
+
+}
+
 /*From source file: https://projects.lukehaas.me/css-loaders/*/
 .loader {
     font-size: 10px;
@@ -67,6 +73,7 @@
     width: 75%;
     height: 75%;
     border-radius: 50%;
+    background: rgb(25, 25, 25);
     content: '';
     margin: auto;
     position: absolute;
