@@ -64,7 +64,7 @@ export default function Userlogin(props) {
             } catch (error) {
                 console.error(error.message);
                 setTimeout(() => {
-                    // setIsLoading(false);
+                    setIsLoading(false);
                     setError(true)
                     setUsername('')
                     setPassword('')
