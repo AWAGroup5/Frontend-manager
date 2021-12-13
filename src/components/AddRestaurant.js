@@ -307,7 +307,7 @@ resetValues() {
                                         className={ styles.inputTimeStyle}  
                                         type="text" 
                                         id="operatingHours" 
-                                        placeholder="Open-C" 
+                                        placeholder="Open-Close" 
                                         onChange={ this.onChangeOperetingHours }>
                                     </input> 
                                     {/* Close<input className={ styles.inputTimeStyle} type="text" name="closingTime" placeholder="Close" />  */}
@@ -339,7 +339,7 @@ resetValues() {
                             <button 
                                 className={ styles.btns } 
                                 onClick={ this.onSubmit }>
-                                    Register Restaurant
+                                    Add Restaurant
                             </button>                                  
                             </div>
                             <img 
